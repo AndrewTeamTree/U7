@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import apiKey from './config';
 import PhotoList from './components/PhotoList';
@@ -10,17 +10,25 @@ const App = () => {
   const [photos, setPhotos] = useState([]);
   const [query, setQuery] = useState("Sk8er");
 
+  const handleQuery = useCallback((searchQuery) => {
+    setQuery(searchQuery);
+
+  }, []);
+
   useEffect(() => {
     fetchData(query);
   }, [query]);
 
-  const fetchData = (query) => {
+  useEffect(() => {
 
+    const searchQuery = query;
+    handleQuery(searchQuery);
+  }, [query, handleQuery]);
+
+  const fetchData = (query) => {
     fetch(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&sort=relevance&privacy_filter=1&safe_search=1&per_page=16&page=1&format=json&nojsoncallback=1`)
       .then(response => response.json())
-
       .then(responseData => {
-
         if (responseData.photos && responseData.photos.photo) {
           setPhotos(responseData.photos.photo);
         } else {
@@ -30,10 +38,6 @@ const App = () => {
       .catch(error => {
         console.error('Error fetching and parsing data:', error);
       });
-  };
-
-  const handleQuery = (searchQuery) => {
-    setQuery(searchQuery);
   };
 
   return (

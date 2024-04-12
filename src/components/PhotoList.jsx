@@ -1,29 +1,31 @@
-import { useEffect } from 'react';
-import NoResults from './NoResults';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { useParams } from "react-router-dom";
-import Photo from "./Photo";
+import { useParams } from 'react-router-dom';
+import NoResults from './NoResults';
+import Photo from './Photo';
 
 const PhotoList = ({ handleQuery, title, photos }) => {
   const { query } = useParams();
 
-  useEffect(() => {
+  React.useEffect(() => {
     const searchQuery = query || title;
-    handleQuery(searchQuery)
-  },);
+    handleQuery(searchQuery);
+  }, [query, title, handleQuery]);
 
   const foundResults = () => {
     if (photos.length > 0) {
       return (
-        <div className="photo-grid">
-          {photos.map(photo => (
-            <Photo
-              key={photo.id}
-              id={photo.id}
-              server={photo.server}
-              secret={photo.secret}
-            />
-          ))}
+        <div className="photo-container">
+          <ul>
+            {photos.map(photo => (
+              <Photo
+                key={photo.id}
+                id={photo.id}
+                server={photo.server}
+                secret={photo.secret}
+              />
+            ))}
+          </ul>
         </div>
       );
     } else {
@@ -44,12 +46,9 @@ PhotoList.propTypes = {
   handleQuery: PropTypes.func.isRequired,
   photos: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
-    farm: PropTypes.number.isRequired,
     server: PropTypes.string.isRequired,
     secret: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    isHorizontal: PropTypes.bool
-  }))
+  })),
 };
 
 export default PhotoList;
