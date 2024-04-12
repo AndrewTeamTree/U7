@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
-import { apiKey } from './config';
+import apiKey from './config';
 import PhotoList from './components/PhotoList';
 import NotFound from './components/NotFound';
 import Search from './components/Search';

@@ -1,4 +1,4 @@
 
-export const apiKey = 'e60bc445981445ee03d3635902744654';
+const apiKey = 'e60bc445981445ee03d3635902744654';
 
 export default apiKey;
