@@ -11,7 +11,7 @@ const Search = ({ handleQuery }) => {
     let searchTag = search.current.value;
     handleQuery(searchTag);
     let path = `search/${searchTag}`;
-    navigate(path, { replace: true });
+    navigate(path, {});
   };
 
   return (
