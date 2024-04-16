@@ -27,9 +27,8 @@ const Search = ({ handleQuery }) => {
   );
 };
 
-// Add prop types validation
 Search.propTypes = {
-  handleQuery: PropTypes.func.isRequired, // Ensure handleQuery is a function and is required
+  handleQuery: PropTypes.func.isRequired
 };
 
 export default Search;
